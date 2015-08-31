@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Lucene Demo</string>
+    <string name="action_rebuild_index">Rebuild Index</string>
+    <string name="action_about">About</string>
+    <string name="search_title">Search…</string>
+    <string name="search_hint">Enter keywords</string>
+    <string name="rebuild_index_progress_title">Building Index</string>
+    <string name="rebuild_index_progress_message">This may take a few seconds…</string>
+    <string name="rebuild_index_success_msg">Ready to search!</string>
+    <string name="rebuild_index_failed_msg">Failed to build the index</string>
+    <string name="query_no_results_msg">No results</string>
+    <string name="query_parsing_error_msg">Failed to parse query</string>
+</resources>
