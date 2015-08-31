@@ -1,0 +1,3 @@
+[submodule "lucenestudy"]
+	path = lucenestudy
+	url = https://github.com/lukhnos/lucenestudy.git
