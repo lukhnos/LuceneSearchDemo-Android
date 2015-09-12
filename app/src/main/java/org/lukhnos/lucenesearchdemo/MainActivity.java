@@ -39,6 +39,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -63,15 +64,23 @@ public class MainActivity extends Activity {
     static final String INDEX_DIR_NAME = "index";
 
     ArrayAdapter<Result> itemsAdapter;
+    ListView listView;
+    View statusOuterView;
+    TextView statusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        statusText = (TextView) findViewById(R.id.status_text);
+        statusOuterView = findViewById(R.id.status_outer_view);
+
         itemsAdapter = new ResultAdapter(this, new ArrayList<Result>());
-        ListView listView = (ListView) findViewById(R.id.search_results_list);
+        listView = (ListView) findViewById(R.id.search_results_list);
         listView.setAdapter(itemsAdapter);
+
+        setStatus(getString(R.string.welcome_search_text));
     }
 
     @Override
@@ -100,13 +109,17 @@ public class MainActivity extends Activity {
                     itemsAdapter.notifyDataSetChanged();
 
                     if (results.size() == 0) {
-                        Toast.makeText(MainActivity.this, R.string.query_no_results_msg, Toast.LENGTH_SHORT).show();
+                        setStatus(getString(R.string.query_no_results_msg));
+                    } else {
+                        setStatus(null);
                     }
 
                     searchView.clearFocus();
                 } catch (ParseException e) {
+                    setStatus(getString(R.string.query_no_results_msg));
                     Toast.makeText(MainActivity.this, R.string.query_parsing_error_msg, Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
+                    setStatus(getString(R.string.query_no_results_msg));
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -139,13 +152,29 @@ public class MainActivity extends Activity {
         }
     }
 
+    void setStatus(String text) {
+        if (text == null) {
+            statusOuterView.setVisibility(View.INVISIBLE);
+            statusText.setText("");
+            listView.setVisibility(View.VISIBLE);
+        } else {
+            statusOuterView.setVisibility(View.VISIBLE);
+            statusText.setText(text);
+            listView.setVisibility(View.INVISIBLE);
+        }
+    }
+
     static class Result {
+        final SearchResult searchResult;
+        final Document doc;
         final String title;
         final String info;
         final String source;
         final String review;
 
         Result(SearchResult searchResult, Document doc) {
+            this.searchResult = searchResult;
+            this.doc = doc;
             title = searchResult.getHighlightedTitle(doc) + String.format(" (%d)", doc.year);
             info = String.format("%s %d/10",
                     doc.positive ? "\uD83D\uDC4D" : "\uD83D\uDC4E", // thumb up/down emojis
@@ -193,8 +222,8 @@ public class MainActivity extends Activity {
             protected void onPostExecute(Boolean result) {
                 dialog.dismiss();
 
-                if (result){
-                    Toast.makeText(MainActivity.this, R.string.rebuild_index_success_msg, Toast.LENGTH_SHORT).show();
+                if (result) {
+                    setStatus(getString(R.string.welcome_search_text));
                 } else {
                     Toast.makeText(MainActivity.this, R.string.rebuild_index_failed_msg, Toast.LENGTH_SHORT).show();
                 }
@@ -215,7 +244,7 @@ public class MainActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Result result = getItem(position);
+            final Result result = getItem(position);
             ViewHolder viewHolder;
             if (convertView == null) {
                 viewHolder = new ViewHolder();
@@ -237,6 +266,19 @@ public class MainActivity extends Activity {
             viewHolder.info.setText(result.info); // info is not in HTML
             viewHolder.source.setText(Html.fromHtml(result.source));
             viewHolder.review.setText(Html.fromHtml(result.review));
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                    intent.putExtra(DetailActivity.EXTRA_TITLE, result.title);
+                    intent.putExtra(DetailActivity.EXTRA_INFO, result.info);
+                    intent.putExtra(DetailActivity.EXTRA_SOURCE, result.source);
+                    intent.putExtra(DetailActivity.EXTRA_REVIEW, result.searchResult.getFullHighlightedReview(result.doc));
+                    startActivity(intent);
+                }
+            });
+
             return convertView;
         }
     }

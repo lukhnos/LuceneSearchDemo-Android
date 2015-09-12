@@ -5,8 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/status_outer_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:id="@+id/status_text"
+            android:textSize="16dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_search_text"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="60dp"/>
+    </LinearLayout>
+
     <ListView
+        android:visibility="invisible"
         android:id="@+id/search_results_list"
+        android:choiceMode="singleChoice"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

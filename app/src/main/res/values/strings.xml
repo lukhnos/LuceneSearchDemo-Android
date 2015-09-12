@@ -6,8 +6,11 @@
     <string name="search_hint">Enter keywords</string>
     <string name="rebuild_index_progress_title">Building Index</string>
     <string name="rebuild_index_progress_message">This may take a few seconds…</string>
-    <string name="rebuild_index_success_msg">Ready to search!</string>
     <string name="rebuild_index_failed_msg">Failed to build the index</string>
     <string name="query_no_results_msg">No results</string>
     <string name="query_parsing_error_msg">Failed to parse query</string>
+    <string name="title_activity_detail">Full Review</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="welcome_search_text">Search Film Reviews with Lucene</string>
 </resources>
