@@ -17,3 +17,5 @@ To run lucenestudy's tests on a connected Android device or emulator:
 
 For more information about the app and its data source, please visit the
 [lucenestudy](https://github.com/lukhnos/lucenestudy/tree/mobile) project.
+
+The app is also available on [Google Play](https://play.google.com/store/apps/details?id=org.lukhnos.lucenesearchdemo).
