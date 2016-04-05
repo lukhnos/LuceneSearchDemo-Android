@@ -9,7 +9,11 @@ an experimental port of Lucene to Android.
 To build the app:
 
     git submodule update --init --recursive
-    ./gradlew build
+    ./gradlew -PANDROID_BUILD_TOOLS_VERSION=23.0.3 build
+
+where `-PANDROID_BUILD_TOOLS_VERSION=23.0.3` is optional if one needs
+to use a different version of Android build tools, e.g. 23.0.3,
+otherwise the default one from `gradle.properties` will apply.
 
 To run lucenestudy's tests on a connected Android device or emulator:
 
