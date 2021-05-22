@@ -24,14 +24,17 @@ package org.lukhnos.lucenesearchdemo;
  * THE SOFTWARE.
  */
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import android.support.test.runner.AndroidJUnit4;
 
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertTrue;
+
+@RunWith(AndroidJUnit4.class)
+public class ApplicationTest  {
+
+    @Test
     public void testTrivial() {
         assertTrue(true);
     }

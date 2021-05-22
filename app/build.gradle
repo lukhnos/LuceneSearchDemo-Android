@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 30
     buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
     dexOptions {
@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId 'org.lukhnos.lucenesearchdemo'
-        minSdkVersion 14
-        targetSdkVersion 23
+        minSdkVersion 28
+        targetSdkVersion 30
         versionCode 3
         versionName '1.2'
 
@@ -26,14 +26,14 @@ android {
 }
 
 dependencies {
-    compile(project(':lucenestudy')) {
+    implementation(project(':lucenestudy')) {
         transitive = false
     }
 
-    androidTestCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support.test:runner:0.3'
-    androidTestCompile 'com.android.support.test:rules:0.3'
-    androidTestCompile(project(path: ':lucenestudy', configuration: 'testArtifacts')) {
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:0.3'
+    androidTestImplementation 'com.android.support.test:rules:0.3'
+    androidTestImplementation(project(path: ':lucenestudy', configuration: 'testArtifacts')) {
         transitive = false
     }
 }
